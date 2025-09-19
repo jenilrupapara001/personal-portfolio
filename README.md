@@ -33,6 +33,7 @@ You can view the live portfolio here:
 ## 📬 Contact
 If you'd like to get in touch:  
 - Email: jenilrupapara48@gmail.com 
-- LinkedIn: Jenil Rupapara(https://linkedin.com/in/yourusername)  
-- GitHub: [Your GitHub](https://github.com/your-username)
+- LinkedIn: [Jenil Rupapara](https://linkedin.com/in/jenilrupapara-fullstack-developer)  
+- GitHub: [Jenil Rupapara](https://github.com/jenilrupapara001)
+
 
