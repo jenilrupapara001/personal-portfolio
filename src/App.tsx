@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Mail, Phone, MapPin, Code, Database, Globe, Server, Palette, Star, Calendar, GraduationCap, Briefcase, ExternalLink } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Mail, Phone, MapPin, Code, Database, Globe, Server, Palette, Star, Calendar, GraduationCap, Briefcase, ExternalLink, ChevronDown, Award, Users, Coffee } from 'lucide-react';
 
 interface Project {
   title: string;
@@ -11,6 +11,10 @@ interface Project {
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [typedText, setTypedText] = useState('');
+  const [projectsCount, setProjectsCount] = useState(0);
+  const [experienceYears, setExperienceYears] = useState(0);
+  const [happyClients, setHappyClients] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
