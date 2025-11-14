@@ -22,6 +22,48 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Animated typing effect
+  useEffect(() => {
+    const text = "Full Stack Developer";
+    let index = 0;
+    const timer = setInterval(() => {
+      if (index < text.length) {
+        setTypedText(text.slice(0, index + 1));
+        index++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 100);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Animated counters
+  useEffect(() => {
+    const animateCounter = (target: number, setter: (value: number) => void, duration: number = 2000) => {
+      const start = 0;
+      const increment = target / (duration / 16);
+      let current = start;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          setter(target);
+          clearInterval(timer);
+        } else {
+          setter(Math.floor(current));
+        }
+      }, 16);
+    };
+
+    const timer = setTimeout(() => {
+      animateCounter(15, setProjectsCount);
+      animateCounter(2, setExperienceYears);
+      animateCounter(50, setHappyClients);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const skills = {
     frontend: ['HTML5', 'CSS3', 'JavaScript', 'React.js', 'Bootstrap', 'Tailwind CSS', 'Responsive Web Design'],
     backend: ['Node.js', 'Express.js', '.NET', 'C#', 'REST APIs'],
@@ -199,7 +241,7 @@ function App() {
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl rounded-2xl mt-2 mx-2 p-4 shadow-xl border border-gray-200/20 dark:border-slate-700/50">
-              {['Home', 'About', 'Skills', 'Experience', 'Education', 'Projects', 'Contact'].map((item) => (
+              {['Home', 'About', 'Skills', 'Experience', 'Education', 'Projects', 'Testimonials', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
@@ -216,26 +258,55 @@ function App() {
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative py-20">
         <div className="max-w-4xl mx-auto text-center relative z-10 w-full">
-          <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl border border-white/20 dark:border-slate-700/50">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-gray-900 dark:from-white via-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
-              Full Stack Developer
+          <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl border border-white/20 dark:border-slate-700/50 relative overflow-hidden">
+            {/* Floating elements */}
+            <div className="absolute -top-4 -right-4 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
+            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl animate-pulse [animation-delay:1s]"></div>
+
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-gray-900 dark:from-white via-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight min-h-[60px] sm:min-h-[80px] md:min-h-[100px]">
+              {typedText}
+              <span className="animate-pulse">|</span>
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-700 dark:text-slate-300 mb-6 sm:mb-8 leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-700 dark:text-slate-300 mb-8 sm:mb-10 leading-relaxed">
               Hi, I'm <span className="text-blue-600 dark:text-blue-400 font-semibold">Jenil Rupapara</span> — a results-driven Full-Stack Web Developer with 2+ years of experience building scalable, responsive, and user-centric web applications.
             </p>
+
+            {/* Achievement Stats */}
+            <div className="grid grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+              <div className="text-center group">
+                <div className="bg-white/10 dark:bg-slate-700/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20 dark:border-slate-600/50 hover:scale-105 transition-all duration-300">
+                  <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400 mb-1">{projectsCount}+</div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-slate-400 font-medium">Projects</div>
+                </div>
+              </div>
+              <div className="text-center group">
+                <div className="bg-white/10 dark:bg-slate-700/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20 dark:border-slate-600/50 hover:scale-105 transition-all duration-300">
+                  <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-1">{experienceYears}+</div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-slate-400 font-medium">Years Exp</div>
+                </div>
+              </div>
+              <div className="text-center group">
+                <div className="bg-white/10 dark:bg-slate-700/50 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/20 dark:border-slate-600/50 hover:scale-105 transition-all duration-300">
+                  <div className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400 mb-1">{happyClients}+</div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-slate-400 font-medium">Happy Clients</div>
+                </div>
+              </div>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-12">
               <button
                 onClick={() => scrollToSection('projects')}
-                className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-semibold hover:scale-105 transform transition-all duration-200 shadow-lg hover:shadow-xl text-base sm:text-base touch-manipulation"
+                className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-semibold hover:scale-105 transform transition-all duration-200 shadow-lg hover:shadow-xl text-base sm:text-base touch-manipulation flex items-center gap-2"
               >
+                <Award size={20} />
                 View My Work
               </button>
               <button
                 onClick={() => scrollToSection('contact')}
-                className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-4 bg-white/10 dark:bg-slate-700/50 backdrop-blur-sm border border-gray-200 dark:border-slate-600 text-gray-700 dark:text-slate-300 rounded-2xl font-semibold hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 text-base sm:text-base touch-manipulation"
+                className="w-full sm:w-auto px-6 sm:px-8 py-4 sm:py-4 bg-white/10 dark:bg-slate-700/50 backdrop-blur-sm border border-gray-200 dark:border-slate-600 text-gray-700 dark:text-slate-300 rounded-2xl font-semibold hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 text-base sm:text-base touch-manipulation flex items-center gap-2"
               >
+                <Mail size={20} />
                 Get In Touch
               </button>
             </div>
@@ -251,6 +322,11 @@ function App() {
               <a href="mailto:jenilrupapara48@gmail.com" className="p-3 sm:p-3 bg-white/10 dark:bg-slate-700/50 backdrop-blur-sm rounded-2xl text-gray-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-200 hover:scale-110 shadow-lg touch-manipulation">
                 <Mail size={24} />
               </a>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce">
+              <ChevronDown size={24} className="text-gray-500 dark:text-slate-400" />
             </div>
           </div>
         </div>
@@ -533,6 +609,126 @@ function App() {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-12 sm:py-20 px-4 relative">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 dark:from-white via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+              What Clients Say
+            </h2>
+            <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300 shadow-xl">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="text-yellow-400 fill-current" />
+                ))}
+              </div>
+              <p className="text-gray-700 dark:text-slate-300 mb-4 italic">
+                "Jenil delivered exceptional work on our e-commerce platform. His attention to detail and technical expertise helped us achieve a 40% increase in user engagement."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">SK</span>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900 dark:text-white">Sarah Kim</div>
+                  <div className="text-sm text-gray-600 dark:text-slate-400">CEO, TechStart Inc.</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300 shadow-xl">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="text-yellow-400 fill-current" />
+                ))}
+              </div>
+              <p className="text-gray-700 dark:text-slate-300 mb-4 italic">
+                "Working with Jenil was a pleasure. He transformed our outdated website into a modern, responsive platform that exceeded our expectations."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">MR</span>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900 dark:text-white">Mike Rodriguez</div>
+                  <div className="text-sm text-gray-600 dark:text-slate-400">Founder, InnovateLab</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300 shadow-xl md:col-span-2 lg:col-span-1">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="text-yellow-400 fill-current" />
+                ))}
+              </div>
+              <p className="text-gray-700 dark:text-slate-300 mb-4 italic">
+                "Outstanding developer with great communication skills. Jenil not only delivered high-quality code but also provided valuable insights for our business growth."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">AL</span>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900 dark:text-white">Anna Liu</div>
+                  <div className="text-sm text-gray-600 dark:text-slate-400">CTO, DataFlow Solutions</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Fun Facts Section */}
+      <section id="fun-facts" className="py-12 sm:py-20 px-4 relative">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 dark:from-white via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+              Fun Facts
+            </h2>
+            <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mx-auto"></div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl p-6 text-center border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300">
+              <div className="p-3 bg-blue-100 dark:bg-blue-900/50 rounded-2xl w-fit mx-auto mb-4">
+                <Coffee size={24} className="text-blue-600 dark:text-blue-400" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">500+</div>
+              <div className="text-sm text-gray-600 dark:text-slate-400">Cups of Coffee</div>
+            </div>
+
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl p-6 text-center border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300">
+              <div className="p-3 bg-indigo-100 dark:bg-indigo-900/50 rounded-2xl w-fit mx-auto mb-4">
+                <Code size={24} className="text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">50K+</div>
+              <div className="text-sm text-gray-600 dark:text-slate-400">Lines of Code</div>
+            </div>
+
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl p-6 text-center border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300">
+              <div className="p-3 bg-purple-100 dark:bg-purple-900/50 rounded-2xl w-fit mx-auto mb-4">
+                <Users size={24} className="text-purple-600 dark:text-purple-400" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">25+</div>
+              <div className="text-sm text-gray-600 dark:text-slate-400">Team Projects</div>
+            </div>
+
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl p-6 text-center border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300">
+              <div className="p-3 bg-pink-100 dark:bg-pink-900/50 rounded-2xl w-fit mx-auto mb-4">
+                <Award size={24} className="text-pink-600 dark:text-pink-400" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-pink-600 dark:text-pink-400 mb-2">10+</div>
+              <div className="text-sm text-gray-600 dark:text-slate-400">Certifications</div>
+            </div>
           </div>
         </div>
       </section>
