@@ -664,7 +664,7 @@ function App() {
               </div>
             </div>
 
-            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300 shadow-xl md:col-span-2 lg:col-span-1">
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300 shadow-xl">
               <div className="flex items-center gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={16} className="text-yellow-400 fill-current" />
@@ -680,6 +680,26 @@ function App() {
                 <div>
                   <div className="font-semibold text-gray-900 dark:text-white">Anna Liu</div>
                   <div className="text-sm text-gray-600 dark:text-slate-400">CTO, DataFlow Solutions</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/10 dark:bg-slate-800/20 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/20 dark:border-slate-700/50 hover:scale-105 transition-all duration-300 shadow-xl md:col-span-2 lg:col-span-1">
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="text-yellow-400 fill-current" />
+                ))}
+              </div>
+              <p className="text-gray-700 dark:text-slate-300 mb-4 italic">
+                "The application you developed is exceptionally user-friendly, featuring a clean design and seamless performance. Everything functions smoothly and intuitively. With a few improvements to the speed and reporting features, it will be truly outstanding. Thank you for delivering such a quality product!"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">BRL</span>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900 dark:text-white">Bavadiya Realty LLP</div>
+                  <div className="text-sm text-gray-600 dark:text-slate-400">Real Estate Company</div>
                 </div>
               </div>
             </div>
